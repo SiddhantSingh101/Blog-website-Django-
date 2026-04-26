@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}About — The Inkwell{% endblock %}
+
+{% block extra_styles %}
+  .about-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 5rem clamp(1.5rem, 5vw, 3rem);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .about-wrap h1 {
+    font-family: var(--ff-head);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .about-wrap h1 em { font-style: italic; color: var(--rust); }
+
+  .about-wrap p {
+    font-size: 1.05rem;
+    color: #3d3326;
+    margin-bottom: 1.25rem;
+    max-width: 58ch;
+  }
+
+  .quote {
+    border-left: 3px solid var(--rust);
+    padding: 0.4rem 0 0.4rem 1.4rem;
+    margin: 2rem 0;
+    font-family: var(--ff-head);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--muted);
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.75rem 1.75rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+
+  .btn:hover { background: var(--rust); }
+{% endblock %}
+
+{% block content %}
+  <div class="about-wrap">
+    <span class="eyebrow">Our Story</span>
+    <h1>A journal for <em>curious</em> minds.</h1>
+
+    <blockquote class="quote">
+      A space to slow down, think deeply, and write honestly.
+    </blockquote>
+
+    <p>
+      The Inkwell started as a personal notebook and grew into a small publication
+      for people who still believe a well-constructed sentence matters.
+    </p>
+
+    <p>
+      No content calendar, no sponsored posts. Just ideas worth sharing.
+    </p>
+
+    <a href="{% url 'home' %}" class="btn">← Back to Home</a>
+  </div>
+{% endblock %}

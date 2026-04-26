@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Home — The Inkwell{% endblock %}
+
+{% block extra_styles %}
+  .hero {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 6rem clamp(1.5rem, 5vw, 3rem) 4rem;
+    text-align: center;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1 {
+    font-family: var(--ff-head);
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--rust); }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 48ch;
+    margin: 0 auto 2rem;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+
+  .btn:hover { background: var(--rust); }
+{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row g-4 align-items-start">
+
+    <!-- LEFT: Main content -->
+    <div class="col-lg-8">
+      <section class="hero">
+        <h1>Words worth <em>reading.</em></h1>
+        <p>A quiet corner of the internet for ideas, essays, and stories.</p>
+        <a href="{% url 'about' %}" class="btn">About This Blog</a>
+
+        {% for post in posts %}
+          <h1>{{ post.title }}</h1>
+          <p>{{ post.content }}</p>
+          <p>{{ post.date }}</p>
+        {% endfor %}
+      </section>
+    </div>
+
+    <!-- RIGHT: Sidebar -->
+    <div class="col-lg-4 position-sticky" style="top: 180px;">
+
+      <div class="sidebar-card">
+        <h6>Recent Posts</h6>
+        <ul class="sidebar-posts">
+          {% for post in recent_posts %}
+            <li><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></li>
+          {% empty %}
+            <li class="text-muted" style="font-size:0.88rem;">No posts yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+     <div class="sidebar-card">
+  <h6>Topics</h6>
+  <div class="tag-cloud">
+    <a href="#">Technology</a>
+    <a href="#">Design</a>
+    <a href="#">Culture</a>
+    <a href="#">Writing</a>
+    <a href="#">Philosophy</a>
+  </div>
+</div>
+
+      <div class="sidebar-card">
+        <h6>About</h6>
+        <p style="font-size:0.88rem; color:var(--muted); margin:0;">
+          The Inkwell is a blog about ideas that matter — written slowly, read carefully.
+          <a href="{% url 'about' %}" style="color:var(--rust);">Learn more →</a>
+        </p>
+      </div>
+
+    </div>
+  </div><!-- end row -->
+</div><!-- end container -->
+{% endblock %}
