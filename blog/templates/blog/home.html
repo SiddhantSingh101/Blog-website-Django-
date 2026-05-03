@@ -58,13 +58,22 @@
       <section class="hero">
         <h1>Words worth <em>reading.</em></h1>
         <p>A quiet corner of the internet for ideas, essays, and stories.</p>
-        <a href="{% url 'about' %}" class="btn">About This Blog</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'create_post' %}" class="btn">Write a Blog</a>
+        {%else%}
+        <a href="{% url 'about' %}" class="btn">About the Blog</a>
+        {%endif%}
 
         {% for post in posts %}
-          <h1>{{ post.title }}</h1>
-          <p>{{ post.content }}</p>
-          <p>{{ post.date }}</p>
-        {% endfor %}
+  <h1>{{ post.title }}</h1>
+  
+  <p>
+    By {{ post.author.username }} · {{ post.date_posted }}
+  </p>
+
+  <p>{{ post.content }}</p>
+{% endfor %}
+
       </section>
     </div>
 
@@ -102,6 +111,6 @@
       </div>
 
     </div>
-  </div><!-- end row -->
-</div><!-- end container -->
+  </div>
+</div>
 {% endblock %}

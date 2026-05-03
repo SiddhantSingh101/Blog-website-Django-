@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Your Profile — The Inkwell{% endblock %}
+
+{% block extra_styles %}
+.hero {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 5rem clamp(1.5rem, 5vw, 3rem);
+  animation: fadeUp 0.6s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.post-card {
+  margin-bottom: 2rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.5rem;
+}
+
+.post-card h2 {
+  margin-bottom: 0.4rem;
+}
+
+.post-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.actions {
+  margin-top: 0.6rem;
+}
+
+.btn-delete {
+  background: #b84c2b;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-delete:hover {
+  background: #8f3a21;
+}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row g-4">
+
+    <!-- LEFT: POSTS -->
+    <div class="col-lg-8">
+      <section class="hero">
+
+        <h1>Your Posts</h1>
+
+        {% for post in posts %}
+          <div class="post-card">
+
+            <h2>{{ post.title }}</h2>
+
+            <p class="post-meta">
+              {{ post.date_posted|date:"M d, Y" }}
+            </p>
+
+            <p>{{ post.content|truncatewords:30 }}</p>
+
+            <div class="actions">
+              <a href="{% url 'edit_post' post.pk %}" class="btn">Edit</a>
+
+              <form action="{% url 'delete_post' post.pk %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn-delete"
+                  onclick="return confirm('Delete this post?')">
+                  Delete
+                </button>
+              </form>
+            </div>
+
+          </div>
+
+        {% empty %}
+          <p>No posts yet.</p>
+        {% endfor %}
+
+      </section>
+    </div>
+
+    <!-- RIGHT: SIDEBAR -->
+    <div class="col-lg-4">
+
+      <div class="sidebar-card">
+
+        <h6>Account</h6>
+
+        <p style="font-size:0.9rem; color:var(--muted);">
+          Logged in as <strong>{{ user.username }}</strong>
+        </p>
+
+        <a href="{% url 'edit_user' %}" class="btn" style="display:block; margin-bottom:0.5rem;">
+          Edit Profile
+        </a>
+
+        <form action="{% url 'delete_user' %}" method="POST">
+          {% csrf_token %}
+          <button class="btn-delete" style="width:100%;"
+            onclick="return confirm('Delete your account?')">
+            Delete Account
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Post — The Inkwell{% endblock %}
+
+{% block extra_styles %}
+.auth-wrap {
+  max-width: 600px;
+  margin: 5rem auto;
+  padding: 0 2rem;
+  animation: fadeUp 0.6s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.auth-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2rem;
+  box-shadow: 6px 6px 0 var(--border);
+}
+
+.auth-card h2 {
+  font-family: var(--ff-head);
+  margin-bottom: 1.5rem;
+}
+
+.auth-card p {
+  margin-bottom: 1rem;
+}
+
+.auth-card label {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.auth-card input,
+.auth-card textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--paper);
+  font-family: var(--ff-body);
+}
+
+.btn-submit {
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-submit:hover {
+  background: var(--rust);
+}
+
+.btn-cancel {
+  display: inline-block;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-card">
+
+    <h2>Edit Post</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      
+      {{ form.as_p }}
+
+      <button type="submit" class="btn-submit">Update Post</button>
+      <a href="{% url 'profile' %}" class="btn-cancel">Cancel</a>
+    </form>
+
+  </div>
+</div>
+{% endblock %}
