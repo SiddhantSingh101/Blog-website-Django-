@@ -1,0 +1,38 @@
+[
+  {
+    "model": "analytics.pixelevent",
+    "pk": 101,
+    "fields": {
+      "event_id": "evt_fixture_home_001",
+      "advertiser_id": "adv_123",
+      "event_type": "PageView",
+      "user_id": "user_fixture_001",
+      "user_email": "demo-reader@example.com",
+      "page_url": "http://localhost:8000/",
+      "referrer": "",
+      "client_timestamp": "2026-06-03T09:00:00Z",
+      "source": "web",
+      "ip_address": "127.0.0.1",
+      "user_agent": "Demo browser",
+      "created_at": "2026-06-03T09:00:01Z"
+    }
+  },
+  {
+    "model": "analytics.pixelevent",
+    "pk": 102,
+    "fields": {
+      "event_id": "evt_fixture_about_001",
+      "advertiser_id": "adv_123",
+      "event_type": "PageView",
+      "user_id": "user_fixture_002",
+      "user_email": "",
+      "page_url": "http://localhost:8000/about/",
+      "referrer": "http://localhost:8000/",
+      "client_timestamp": "2026-06-03T09:05:00Z",
+      "source": "web",
+      "ip_address": "127.0.0.1",
+      "user_agent": "Demo browser",
+      "created_at": "2026-06-03T09:05:01Z"
+    }
+  }
+]

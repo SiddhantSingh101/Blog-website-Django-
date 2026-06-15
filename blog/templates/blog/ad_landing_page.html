@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}{{ offer.title }} - The Inkwell{% endblock %}
+{% block document_metadata %}
+  <meta name="page_type" content="ad_landing_page">
+  <meta name="offer_slug" content="{{ offer_slug }}">
+  <meta name="offer_name" content="{{ offer.title }}">
+  <meta name="ad_test" content="true">
+{% endblock %}
+
+{% block extra_styles %}
+  .offer-page {
+    padding: 4rem 0 5rem;
+  }
+
+  .offer-layout {
+    align-items: stretch;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  }
+
+  .offer-hero,
+  .tracking-panel {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+
+  .offer-hero {
+    background: #fffaf1;
+    overflow: hidden;
+  }
+
+  .offer-art {
+    align-items: flex-end;
+    background:
+      linear-gradient(rgba(26, 18, 8, 0.08), rgba(26, 18, 8, 0.3)),
+      linear-gradient(135deg, #17433e 0%, #ba6b45 52%, #e4c56d 100%);
+    color: var(--paper);
+    display: flex;
+    min-height: 220px;
+    padding: 1.5rem;
+  }
+
+  .offer-art span {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 0.42rem 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .offer-copy {
+    padding: clamp(1.4rem, 4vw, 2.3rem);
+  }
+
+  .offer-copy h1 {
+    font-family: var(--ff-head);
+    font-size: clamp(2rem, 4vw, 3.1rem);
+    line-height: 1.12;
+    margin-bottom: 1rem;
+  }
+
+  .offer-copy p {
+    color: var(--muted);
+    font-size: 1.02rem;
+    margin-bottom: 1.5rem;
+    max-width: 62ch;
+  }
+
+  .offer-button {
+    background: var(--ink);
+    border: 0;
+    border-radius: 3px;
+    color: var(--paper);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.85rem 1.2rem;
+    text-transform: uppercase;
+  }
+
+  .tracking-panel {
+    background: #ebe3d4;
+    padding: 1.2rem;
+  }
+
+  .tracking-panel h2 {
+    font-family: var(--ff-head);
+    font-size: 1.35rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .tracking-panel p {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .query-table {
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    width: 100%;
+  }
+
+  .query-table th,
+  .query-table td {
+    border-top: 1px solid var(--border);
+    padding: 0.55rem 0;
+    text-align: left;
+    vertical-align: top;
+    word-break: break-word;
+  }
+
+  .query-table th {
+    color: var(--ink);
+    font-weight: 700;
+    padding-right: 0.8rem;
+    width: 38%;
+  }
+
+  .empty-query {
+    color: var(--muted);
+    font-size: 0.86rem;
+    margin: 0;
+  }
+
+  @media (max-width: 800px) {
+    .offer-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endblock %}
+
+{% block content %}
+  <section class="offer-page">
+    <div class="offer-layout">
+      <article class="offer-hero">
+        <div class="offer-art">
+          <span>{{ offer.tag }}</span>
+        </div>
+        <div class="offer-copy">
+          <h1>{{ offer.headline }}</h1>
+          <p>{{ offer.body }}</p>
+          <button class="offer-button" type="button">{{ offer.cta }}</button>
+        </div>
+      </article>
+
+      <aside class="tracking-panel">
+        <h2>Landing URL Data</h2>
+        <p>
+          This page prints the query parameters currently in the URL, which should line up with the event your collector stores.
+        </p>
+
+        {% if query_items %}
+          <table class="query-table">
+            <tbody>
+              {% for key, value in query_items %}
+                <tr>
+                  <th>{{ key }}</th>
+                  <td>{{ value }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <p class="empty-query">No query parameters found. Open this page from the ad test lab to include placeholder UTM values.</p>
+        {% endif %}
+      </aside>
+    </div>
+  </section>
+{% endblock %}

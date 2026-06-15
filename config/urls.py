@@ -30,7 +30,6 @@ urlpatterns = [
     path('',include('blog.urls')),
     path('profile/',blog_views.profile, name='profile'),
    path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),
-   path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),
      path('profile/edit/', user_views.edit_user, name='edit_user'),
     path('profile/delete/', user_views.delete_user, name='delete_user'),
 

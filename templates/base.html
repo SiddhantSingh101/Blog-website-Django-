@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{% if PIXEL_SCRIPT_URL and PIXEL_COLLECTOR_URL %}
+  <!-- Custom Pixel Code -->
+<script
+  async
+  src="{{ PIXEL_SCRIPT_URL }}"
+  data-pixel-id="{{ PIXEL_ID }}"
+  data-collector-url="{{ PIXEL_COLLECTOR_URL }}">
+</script>
+{% endif %}
+
   <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,6 +21,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}The Inkwell{% endblock %}</title>
+  {% block document_metadata %}{% endblock %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -133,6 +144,12 @@
           About
         </a>
       </li>
+      <li>
+        <a href="{% url 'ad_test_lab' %}"
+           {% if request.resolver_match.url_name == 'ad_test_lab' or request.resolver_match.url_name == 'ad_landing_page' %}class="active"{% endif %}>
+          Ads
+        </a>
+      </li>
     </ul>
     <div class="nav-links">
        {% if user.is_authenticated %}
@@ -171,6 +188,43 @@
   <footer>
     <p>&copy; {% now "Y" %} The Inkwell</p>
   </footer>
+
+{% if PIXEL_COLLECTOR_URL %}
+  <script>
+    (function () {
+      const COLLECTOR_URL = "{{ PIXEL_COLLECTOR_URL|escapejs }}";
+      const ADVERTISER_ID = "{{ PIXEL_ID|escapejs }}";
+
+      if (!navigator.sendBeacon || !window.crypto || !crypto.randomUUID) {
+        return;
+      }
+
+      let userId = localStorage.getItem("ctv_user_id");
+
+      if (!userId) {
+        userId = "user_" + crypto.randomUUID();
+        localStorage.setItem("ctv_user_id", userId);
+      }
+
+      const payload = {
+        event_id: "evt_" + crypto.randomUUID(),
+        advertiser_id: ADVERTISER_ID,
+        event_type: "PageView",
+        user_id: userId,
+        user_email: "{{ user.email|default:''|escapejs }}",
+        page_url: window.location.href,
+        referrer: document.referrer,
+        client_timestamp: new Date().toISOString(),
+        source: "web"
+      };
+
+      navigator.sendBeacon(
+        COLLECTOR_URL,
+        JSON.stringify(payload)
+      );
+    })();
+  </script>
+{% endif %}
 
  
 

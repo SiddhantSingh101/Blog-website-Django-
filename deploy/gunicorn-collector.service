@@ -1,0 +1,16 @@
+[Unit]
+Description=Gunicorn service for the storefront analytics collector
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/srv/storefront
+EnvironmentFile=/srv/storefront/.env.collector
+ExecStart=/srv/storefront/venv/bin/gunicorn --workers 2 --bind unix:/run/storefront-collector/gunicorn.sock collector_config.wsgi:application
+Restart=always
+RuntimeDirectory=storefront-collector
+RuntimeDirectoryMode=0755
+
+[Install]
+WantedBy=multi-user.target

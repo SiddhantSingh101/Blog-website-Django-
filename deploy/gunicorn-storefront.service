@@ -1,0 +1,16 @@
+[Unit]
+Description=Gunicorn service for the storefront Django app
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/srv/storefront
+EnvironmentFile=/srv/storefront/.env
+ExecStart=/srv/storefront/venv/bin/gunicorn --workers 3 --bind unix:/run/storefront/gunicorn.sock config.wsgi:application
+Restart=always
+RuntimeDirectory=storefront
+RuntimeDirectoryMode=0755
+
+[Install]
+WantedBy=multi-user.target

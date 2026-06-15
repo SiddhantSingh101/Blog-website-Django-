@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block title %}Ad Test Lab - The Inkwell{% endblock %}
+{% block document_metadata %}
+  <meta name="page_type" content="ad_test_lab">
+  <meta name="ad_test" content="true">
+  <meta name="collector_fields" content="utm_source,utm_medium,utm_campaign,gclid,fbclid,msclkid,campaign_id,creative_id,placement_id">
+{% endblock %}
+
+{% block extra_styles %}
+  .ad-lab {
+    padding: 4rem 0 5rem;
+  }
+
+  .lab-heading {
+    margin: 0 auto 2.5rem;
+    max-width: 760px;
+    text-align: center;
+  }
+
+  .lab-heading .eyebrow {
+    color: var(--rust);
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .lab-heading h1 {
+    font-family: var(--ff-head);
+    font-size: clamp(2.1rem, 5vw, 3.3rem);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .lab-heading p {
+    color: var(--muted);
+    font-size: 1rem;
+    margin: 0 auto;
+    max-width: 62ch;
+  }
+
+  .ad-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    margin-bottom: 2rem;
+  }
+
+  .test-ad {
+    background: #fffaf1;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    min-height: 310px;
+    overflow: hidden;
+  }
+
+  .test-ad-media {
+    align-items: center;
+    background: linear-gradient(135deg, #22322f 0%, #95563f 100%);
+    color: var(--paper);
+    display: flex;
+    min-height: 116px;
+    padding: 1.25rem;
+  }
+
+  .test-ad-media span {
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    padding: 0.35rem 0.6rem;
+    text-transform: uppercase;
+  }
+
+  .test-ad-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.2rem;
+  }
+
+  .test-ad h2 {
+    font-family: var(--ff-head);
+    font-size: 1.35rem;
+    line-height: 1.2;
+    margin-bottom: 0.65rem;
+  }
+
+  .test-ad p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .tracking-list {
+    color: #5e5348;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+  }
+
+  .ad-click {
+    background: var(--ink);
+    border-radius: 3px;
+    color: var(--paper);
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-top: auto;
+    padding: 0.72rem 0.8rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .ad-click:hover {
+    background: var(--rust);
+    color: var(--paper);
+    text-decoration: none;
+  }
+
+  .test-note {
+    background: #ebe3d4;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: #4d443a;
+    font-size: 0.92rem;
+    margin: 0 auto;
+    max-width: 760px;
+    padding: 1rem 1.1rem;
+  }
+{% endblock %}
+
+{% block content %}
+  <section class="ad-lab">
+    <div class="lab-heading">
+      <span class="eyebrow">Collector Test Pages</span>
+      <h1>Ad links with placeholder attribution.</h1>
+      <p>
+        Click any ad card to open a landing page with UTM values, ad IDs, and a placeholder click ID in the URL.
+      </p>
+    </div>
+
+    <div class="ad-grid">
+      {% for campaign in campaigns %}
+        <article class="test-ad">
+          <div class="test-ad-media">
+            <span>{{ campaign.channel }}</span>
+          </div>
+          <div class="test-ad-body">
+            <h2>{{ campaign.name }}</h2>
+            <p>Placeholder creative that behaves like an ad click into the tracked storefront.</p>
+            <ul class="tracking-list">
+              <li>utm_source={{ campaign.source }}</li>
+              <li>utm_medium={{ campaign.medium }}</li>
+              <li>utm_campaign={{ campaign.campaign }}</li>
+              <li>{{ campaign.click_id }}={{ campaign.click_value }}</li>
+            </ul>
+            <a class="ad-click" href="{{ campaign.landing_url }}">Open Landing Page</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <p class="test-note">
+      These links intentionally use fake campaign values like <strong>cmp_search_001</strong>,
+      <strong>crt_carousel_002</strong>, and <strong>plc_sidebar_003</strong> so your collector can store clean test data.
+    </p>
+  </section>
+{% endblock %}

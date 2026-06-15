@@ -47,6 +47,103 @@
   }
 
   .btn:hover { background: var(--rust); }
+
+  .sidebar-card {
+    border: 1px solid var(--border);
+    background: var(--cream);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+  }
+
+  .sidebar-card h6 {
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .sidebar-posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sidebar-posts li + li {
+    margin-top: 0.6rem;
+  }
+
+  .sidebar-posts a,
+  .tag-cloud a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .sidebar-posts a:hover,
+  .tag-cloud a:hover {
+    color: var(--rust);
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-cloud a {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.55rem;
+  }
+
+  .sidebar-ad {
+    background: #1f2f2a;
+    border-color: #1f2f2a;
+    color: var(--paper);
+  }
+
+  .sidebar-ad h6,
+  .sidebar-ad p {
+    color: inherit;
+  }
+
+  .ad-label {
+    color: #d8c9a8;
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .sidebar-ad p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .ad-link {
+    background: var(--paper);
+    color: var(--ink);
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.65rem 0.8rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 3px;
+  }
+
+  .ad-link:hover {
+    color: var(--rust);
+    text-decoration: none;
+  }
 {% endblock %}
 {% block content %}
 
@@ -91,17 +188,25 @@
         </ul>
       </div>
 
-     <div class="sidebar-card">
-  <h6>Topics</h6>
-  <div class="tag-cloud">
-    <a href="#">Technology</a>
-    <a href="#">Design</a>
-    <a href="#">Culture</a>
-    <a href="#">Writing</a>
-    <a href="#">Philosophy</a>
-  </div>
-</div>
+      <div class="sidebar-card">
+        <h6>Topics</h6>
+        <div class="tag-cloud">
+          <a href="#">Technology</a>
+          <a href="#">Design</a>
+          <a href="#">Culture</a>
+          <a href="#">Writing</a>
+          <a href="#">Philosophy</a>
+        </div>
+      </div>
 
+      <div class="sidebar-card sidebar-ad">
+        <span class="ad-label">Sponsored</span>
+        <h6>Example Ad</h6>
+        <p>Promote a featured newsletter, product, or writing tool from this sidebar spot.</p>
+        <a href="https://example.com" class="ad-link" target="_blank" rel="noopener noreferrer">
+          Visit Placeholder
+        </a>
+      </div>
       <div class="sidebar-card">
         <h6>About</h6>
         <p style="font-size:0.88rem; color:var(--muted); margin:0;">

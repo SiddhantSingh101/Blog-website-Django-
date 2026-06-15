@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Collector Demo</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f7f7f3;
+      color: #171717;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      border-bottom: 1px solid #deded7;
+      padding: 24px 32px;
+    }
+
+    main {
+      padding: 28px 32px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+    }
+
+    .metrics {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-bottom: 24px;
+    }
+
+    .metric {
+      background: #ffffff;
+      border: 1px solid #deded7;
+      border-radius: 6px;
+      padding: 18px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border: 1px solid #deded7;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #ecece6;
+      font-size: 14px;
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eeeeea;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .url {
+      max-width: 360px;
+      overflow-wrap: anywhere;
+    }
+
+    .empty {
+      background: #ffffff;
+      border: 1px solid #deded7;
+      border-radius: 6px;
+      padding: 24px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pixel Collector Demo</h1>
+    <p>Events received from the blog page beacon are stored in the local SQLite database.</p>
+  </header>
+
+  <main>
+    <section class="metrics">
+      <div class="metric">
+        <span>Total events</span>
+        <strong>{{ total_events }}</strong>
+      </div>
+      <div class="metric">
+        <span>Unique pixel users</span>
+        <strong>{{ unique_users }}</strong>
+      </div>
+    </section>
+
+    {% if events %}
+      <table>
+        <thead>
+          <tr>
+            <th>Received</th>
+            <th>Event</th>
+            <th>User ID</th>
+            <th>Email</th>
+            <th>Page</th>
+            <th>Referrer</th>
+            <th>IP</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for event in events %}
+            <tr>
+              <td>{{ event.created_at }}</td>
+              <td>{{ event.event_type }}</td>
+              <td>{{ event.user_id }}</td>
+              <td>{{ event.user_email|default:"-" }}</td>
+              <td class="url">{{ event.page_url }}</td>
+              <td class="url">{{ event.referrer|default:"-" }}</td>
+              <td>{{ event.ip_address|default:"-" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div class="empty">
+        Open the blog home page, then refresh this page to see collected pixel events.
+      </div>
+    {% endif %}
+  </main>
+</body>
+</html>
