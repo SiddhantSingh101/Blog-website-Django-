@@ -4,11 +4,10 @@
 {% if PIXEL_SCRIPT_URL and PIXEL_COLLECTOR_URL %}
   <!-- Custom Pixel Code -->
 <script
-  async
-  src="{{ PIXEL_SCRIPT_URL }}"
-  data-pixel-id="{{ PIXEL_ID }}"
-  data-collector-url="{{ PIXEL_COLLECTOR_URL }}">
-</script>
+  src="http://13.60.207.137:8001/static/tracking/pixel.js"
+  data-pixel-id="px_your_pixel_id"
+  data-user-id="your_logged_in_user_id"
+></script>
 {% endif %}
 
   <!-- Required meta tags -->
